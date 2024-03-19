@@ -4,8 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using AccessibilityImprovementsWithAI.Logic;
+using AccessibilityImprovementsWithAI.Models;
 using Azure;
 using Azure.AI.OpenAI;
+using Newtonsoft.Json;
+using OpenQA.Selenium;
 
 namespace AccessibilityImprovementsWithAI.ChatGPTInteractions
 {
@@ -43,29 +47,40 @@ namespace AccessibilityImprovementsWithAI.ChatGPTInteractions
 
             Response<ChatCompletions> response = client.GetChatCompletionsAsync(chatCompletionsOptions).Result;
 
-            TestTwo(clickElementTool);
-        }
-
-        private void TestTwo(ChatCompletionsFunctionToolDefinition someTool)
-        {
-            ChatRequestToolMessage GetToolCallResponseMessage(ChatCompletionsToolCall toolCall)
+            ChatChoice responseChoice = response.Value.Choices[0];
+            if (responseChoice.FinishReason == CompletionsFinishReason.ToolCalls)
             {
-                var functionToolCall = toolCall as ChatCompletionsFunctionToolCall;
-                if (functionToolCall?.Name == someTool.Name)
+                // Add the assistant message with tool calls to the conversation history
+                ChatRequestAssistantMessage toolCallHistoryMessage = new(responseChoice.Message);
+                chatCompletionsOptions.Messages.Add(toolCallHistoryMessage);
+
+                // Add a new tool message for each tool call that is resolved
+                foreach (ChatCompletionsToolCall toolCall in responseChoice.Message.ToolCalls)
                 {
-                    // Validate and process the JSON arguments for the function call
-                    string unvalidatedArguments = functionToolCall.Arguments;
-                    var functionResultData = (object)null; // GetYourFunctionResultData(unvalidatedArguments);
-                                                           // Here, replacing with an example as if returned from "GetYourFunctionResultData"
-                    functionResultData = "31 celsius";
-                    return new ChatRequestToolMessage(functionResultData.ToString(), toolCall.Id);
+                    //chatCompletionsOptions.Messages.Add(GetToolCallResponseMessage(toolCall, clickElementTool));
                 }
-                else
-                {
-                    // Handle other or unexpected calls
-                    throw new NotImplementedException();
-                }
+
+                // Now make a new request with all the messages thus far, including the original
             }
         }
+
+        /*private ChatRequestToolMessage GetToolCallResponseMessage(ChatCompletionsToolCall toolCall, ChatCompletionsFunctionToolDefinition someTool)
+        {
+            var navigationLogic = new NavigationLogic();
+
+            var functionToolCall = toolCall as ChatCompletionsFunctionToolCall;
+            if (functionToolCall?.Name == "click_element")
+            {
+                // Validate and process the JSON arguments for the function call
+                ClickElementResponse clickElementResponse = JsonConvert.DeserializeObject<ClickElementResponse>(functionToolCall.Arguments);
+                var functionResultData = navigationLogic.Click(new WebDriver(), clickElementResponse.ElementId);
+                return new ChatRequestToolMessage(functionResultData.ToString(), toolCall.Id);
+            }
+            else
+            {
+                // Handle other or unexpected calls
+                throw new NotImplementedException();
+            }
+        }*/
     }
 }
