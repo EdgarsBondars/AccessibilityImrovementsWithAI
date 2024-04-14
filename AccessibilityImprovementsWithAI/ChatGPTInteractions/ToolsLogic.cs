@@ -15,6 +15,15 @@ namespace AccessibilityImprovementsWithAI.ChatGPTInteractions
 {
     public class ToolsLogic
     {
+        private readonly IWebDriver _driver;
+        private readonly NavigationLogic _navigationLogic;
+
+        public ToolsLogic(IWebDriver driver)
+        {
+            _driver = driver;
+            _navigationLogic = new NavigationLogic(driver);
+        }
+
         public void TestOne(OpenAIClient client)
         {
             var clickElementTool = new ChatCompletionsFunctionToolDefinition()
@@ -57,30 +66,29 @@ namespace AccessibilityImprovementsWithAI.ChatGPTInteractions
                 // Add a new tool message for each tool call that is resolved
                 foreach (ChatCompletionsToolCall toolCall in responseChoice.Message.ToolCalls)
                 {
-                    //chatCompletionsOptions.Messages.Add(GetToolCallResponseMessage(toolCall, clickElementTool));
+                    chatCompletionsOptions.Messages.Add(GetToolCallResponseMessage(toolCall, clickElementTool));
                 }
 
                 // Now make a new request with all the messages thus far, including the original
             }
         }
 
-        /*private ChatRequestToolMessage GetToolCallResponseMessage(ChatCompletionsToolCall toolCall, ChatCompletionsFunctionToolDefinition someTool)
+        private ChatRequestToolMessage GetToolCallResponseMessage(ChatCompletionsToolCall toolCall, ChatCompletionsFunctionToolDefinition someTool)
         {
-            var navigationLogic = new NavigationLogic();
-
             var functionToolCall = toolCall as ChatCompletionsFunctionToolCall;
             if (functionToolCall?.Name == "click_element")
             {
                 // Validate and process the JSON arguments for the function call
                 ClickElementResponse clickElementResponse = JsonConvert.DeserializeObject<ClickElementResponse>(functionToolCall.Arguments);
-                var functionResultData = navigationLogic.Click(new WebDriver(), clickElementResponse.ElementId);
-                return new ChatRequestToolMessage(functionResultData.ToString(), toolCall.Id);
+                _navigationLogic.Click(clickElementResponse.ElementId);
+
+                return new ChatRequestToolMessage("Success", toolCall.Id);
             }
             else
             {
                 // Handle other or unexpected calls
                 throw new NotImplementedException();
             }
-        }*/
+        }
     }
 }

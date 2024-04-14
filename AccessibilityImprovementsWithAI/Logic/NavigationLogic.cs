@@ -4,20 +4,27 @@ namespace AccessibilityImprovementsWithAI.Logic
 {
     public class NavigationLogic
     {
-        public void SetFocus(IWebDriver driver, string elementId)
-        {
-            IWebElement element = driver.FindElement(By.Id(elementId));
+        private readonly IWebDriver _driver;
 
-            // Set focus on the element using JavaScript
-            ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].focus();", element);
+        public NavigationLogic(IWebDriver driver)
+        {
+            _driver = driver;
         }
 
-        public void Click(IWebDriver driver, string elementId)
+        public void SetFocus(string elementId)
         {
-            IWebElement element = driver.FindElement(By.Id(elementId));
+            IWebElement element = _driver.FindElement(By.Id(elementId));
 
             // Set focus on the element using JavaScript
-            ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", element);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].focus();", element);
+        }
+
+        public void Click(string elementId)
+        {
+            IWebElement element = _driver.FindElement(By.Id(elementId));
+
+            // Set focus on the element using JavaScript
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", element);
         }
     }
 }
