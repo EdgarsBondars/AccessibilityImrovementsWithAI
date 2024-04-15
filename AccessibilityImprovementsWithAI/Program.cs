@@ -23,7 +23,7 @@ string htmlContent = driver.PageSource;
 Console.WriteLine(htmlContent);
 
 // Close the WebDriver session
-toolsLogic.TestOne(client);
+//toolsLogic.TestOne(client);
 
 Console.ReadLine();
 driver.Quit();
