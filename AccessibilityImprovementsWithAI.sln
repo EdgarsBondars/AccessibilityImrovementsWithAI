@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessibilityImprovementsWi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accessibility Testing", "..\Accessibility Testing\Accessibility Testing\Accessibility Testing.csproj", "{DA64C2BF-25F9-498F-854E-CD2D9675A14A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{BDAF1803-508F-40FE-A4F9-01631D4DD7FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{DA64C2BF-25F9-498F-854E-CD2D9675A14A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA64C2BF-25F9-498F-854E-CD2D9675A14A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA64C2BF-25F9-498F-854E-CD2D9675A14A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDAF1803-508F-40FE-A4F9-01631D4DD7FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDAF1803-508F-40FE-A4F9-01631D4DD7FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDAF1803-508F-40FE-A4F9-01631D4DD7FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDAF1803-508F-40FE-A4F9-01631D4DD7FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

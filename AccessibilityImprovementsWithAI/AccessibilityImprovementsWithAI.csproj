@@ -15,4 +15,11 @@
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="122.0.6261.6901" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Tests\Understandable\" />
+    <Folder Include="Tests\Robust\" />
+    <Folder Include="Tests\Perceivable\" />
+    <Folder Include="Tests\Operable\" />
+  </ItemGroup>
+
 </Project>

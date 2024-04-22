@@ -26,5 +26,12 @@ namespace AccessibilityImprovementsWithAI.Logic
             // Set focus on the element using JavaScript
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", element);
         }
+
+        public void NavigateTo(string url)
+        {
+            _driver.Navigate().GoToUrl(url);
+        }
+
+
     }
 }
