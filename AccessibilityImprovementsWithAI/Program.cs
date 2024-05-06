@@ -1,10 +1,8 @@
 ﻿using AccessibilityImprovementsWithAI.ChatGPTInteractions;
-using Azure;
 using Azure.AI.OpenAI;
 using Microsoft.Extensions.Configuration;
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
-using static System.Environment;
+using OpenQA.Selenium.Edge;
 
 IConfiguration config = new ConfigurationBuilder()
     .AddUserSecrets<Program>()
@@ -12,7 +10,7 @@ IConfiguration config = new ConfigurationBuilder()
 
 var ApiKey = config["ApiKey"];
 OpenAIClient client = new OpenAIClient(ApiKey, new OpenAIClientOptions());
-IWebDriver driver = new ChromeDriver();
+IWebDriver driver = new EdgeDriver();
 
 var toolsLogic = new ToolsLogic(driver);
 // Navigate to a website
@@ -26,4 +24,16 @@ Console.WriteLine(htmlContent);
 //toolsLogic.TestOne(client);
 
 Console.ReadLine();
+string input = string.Empty;
+while (input != "exit")
+{
+    /*IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+    IWebElement element = (IWebElement)js.ExecuteScript("return document.activeElement");
+    string currentElement = driver.SwitchTo().ActiveElement().Text;
+*/
+    toolsLogic.TestOne(input);
+    Console.WriteLine("Problem solved? New chat is initiated.");
+    input = Console.ReadLine();
+}
+
 driver.Quit();
