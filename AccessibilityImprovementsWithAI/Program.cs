@@ -20,8 +20,6 @@ string htmlContent = driver.PageSource;
 
 Console.WriteLine(htmlContent);
 
-// Close the WebDriver session
-//toolsLogic.TestOne(client);
 
 Console.ReadLine();
 string input = string.Empty;
@@ -31,7 +29,7 @@ while (input != "exit")
     IWebElement element = (IWebElement)js.ExecuteScript("return document.activeElement");
     string currentElement = driver.SwitchTo().ActiveElement().Text;
 */
-    toolsLogic.TestOne(input);
+    toolsLogic.FixDescribedAccessibilityIssue(input);
     Console.WriteLine("Problem solved? New chat is initiated.");
     input = Console.ReadLine();
 }

@@ -2,75 +2,99 @@
 
 namespace AccessibilityImprovementsWithAI.Logic
 {
+    /// <summary>
+    /// Provides navigation and interaction logic for managing and manipulating web pages using Selenium.
+    /// </summary>
     public class NavigationLogic
     {
         private readonly IWebDriver _driver;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NavigationLogic"/> class.
+        /// </summary>
+        /// <param name="driver">The Selenium WebDriver instance for browser interactions.</param>
         public NavigationLogic(IWebDriver driver)
         {
             _driver = driver;
         }
 
+        /// <summary>
+        /// Sets focus to the element with the specified ID.
+        /// </summary>
+        /// <param name="elementId">The ID of the element to focus on.</param>
         public void SetFocus(string elementId)
         {
             IWebElement element = _driver.FindElement(By.Id(elementId));
-
-            // Set focus on the element using JavaScript
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].focus();", element);
         }
 
+        /// <summary>
+        /// Clicks the element with the specified ID.
+        /// </summary>
+        /// <param name="elementId">The ID of the element to click.</param>
         public void Click(string elementId)
         {
             IWebElement element = _driver.FindElement(By.Id(elementId));
-
-            // Set focus on the element using JavaScript
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", element);
         }
 
+        /// <summary>
+        /// Navigates the browser to the specified URL.
+        /// </summary>
+        /// <param name="url">The URL to navigate to.</param>
         public void NavigateTo(string url)
         {
             _driver.Navigate().GoToUrl(url);
         }
 
+        /// <summary>
+        /// Retrieves the ID of the currently focused element on the page.
+        /// </summary>
+        /// <returns>The ID of the currently focused element.</returns>
         public string GetCurrentFocus()
         {
-            // Get the currently focused element using JavaScript
             IWebElement element = (IWebElement)((IJavaScriptExecutor)_driver).ExecuteScript("return document.activeElement;");
-
-            // Return the id of the focused element
             return element.GetAttribute("id");
         }
 
+        /// <summary>
+        /// Extracts and returns the HTML content of the <main> tag from the current page.
+        /// </summary>
+        /// <returns>The HTML content of the <main> tag.</returns>
         public string GetPageHtml()
         {
-            // Get the HTML source of the current page
             string pageHtml = _driver.PageSource;
-
-            // Find the start and end index of the <main> tag
             int startIndex = pageHtml.IndexOf("<main>");
             int endIndex = pageHtml.IndexOf("</main>");
-
-            // Extract the content between the <main> tags
             string mainHtml = pageHtml.Substring(startIndex, endIndex - startIndex + 7);
-
             return mainHtml;
         }
 
+        /// <summary>
+        /// Retrieves the entire HTML of the current page, including JavaScript modifications.
+        /// </summary>
+        /// <returns>The HTML content of the current page.</returns>
         public string GetCurrentPageHtml()
         {
-            // Return the current HTML of the page, including any changes made by JavaScript
             return (string)((IJavaScriptExecutor)_driver).ExecuteScript("return document.documentElement.outerHTML;");
         }
 
+        /// <summary>
+        /// Replaces the entire HTML of the current page with the specified HTML.
+        /// </summary>
+        /// <param name="newHtml">The new HTML content to replace the existing page content.</param>
         public void ReplaceHtml(string newHtml)
         {
-            // Replace the entire HTML of the page with newHtml
             ((IJavaScriptExecutor)_driver).ExecuteScript($"document.write({newHtml});");
         }
 
+        /// <summary>
+        /// Executes the provided JavaScript code in the context of the current page.
+        /// </summary>
+        /// <param name="script">The JavaScript code to execute.</param>
+        /// <returns>The result of the executed JavaScript code.</returns>
         public object ExecuteJavaScript(string script)
         {
-            // Execute the provided JavaScript code
             return ((IJavaScriptExecutor)_driver).ExecuteScript(script);
         }
     }

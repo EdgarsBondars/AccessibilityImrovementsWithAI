@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 using Azure.AI.OpenAI;
 
 namespace AccessibilityImprovementsWithAI.ChatGPTInteractions
 {
+    /// <summary>
+    /// Provides a collection of tool definitions to interact with the DOM using AI-driven chat functions.
+    /// Each tool is defined with its name, description, and parameters required for execution.
+    /// </summary>
     public static class FunctionToolDefinitions
     {
+        /// <summary>
+        /// Tool definition for clicking an element by its HTTP ID.
+        /// </summary>
         public static ChatCompletionsFunctionToolDefinition ClickElementTool = new ChatCompletionsFunctionToolDefinition()
         {
             Name = "click_element",
@@ -31,6 +33,9 @@ namespace AccessibilityImprovementsWithAI.ChatGPTInteractions
             new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
         };
 
+        /// <summary>
+        /// Tool definition for setting focus on an element by its HTTP ID.
+        /// </summary>
         public static ChatCompletionsFunctionToolDefinition SetFocusTool = new ChatCompletionsFunctionToolDefinition()
         {
             Name = "set_focus",
@@ -52,6 +57,10 @@ namespace AccessibilityImprovementsWithAI.ChatGPTInteractions
             new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
         };
 
+        /// <summary>
+        /// Tool definition for executing JavaScript code in the user's DOM.
+        /// The changes are applied instantly and visible to the user.
+        /// </summary>
         public static ChatCompletionsFunctionToolDefinition ExecuteJavaScriptTool = new ChatCompletionsFunctionToolDefinition()
         {
             Name = "execute_javascript",
@@ -73,6 +82,9 @@ namespace AccessibilityImprovementsWithAI.ChatGPTInteractions
             new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
         };
 
+        /// <summary>
+        /// Tool definition for retrieving the HTML source of the current page.
+        /// </summary>
         public static ChatCompletionsFunctionToolDefinition GetPageHtmlTool = new ChatCompletionsFunctionToolDefinition()
         {
             Name = "get_page_html",
